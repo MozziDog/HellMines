@@ -70,6 +70,12 @@ public class TileBlock : MonoBehaviour
             return;
         }
 
+        if (this.isRevealed)
+        {
+            Debug.LogWarning("Revealing once revealed");
+            return;
+        }
+
         isRevealed = true;
         Grid._leftTiles -= 1;
         Grid.instance.CheckGameClear();

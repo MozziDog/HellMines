@@ -16,13 +16,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Slider minesSlider;
     [SerializeField] TMP_Text minesText;
     [Space(20)]
-    [SerializeField] Toggle levelToggle_easy;
-    [SerializeField] Toggle levelToggle_normal;
-    [SerializeField] Toggle levelToggle_hard;
+    [SerializeField] AudioClip _buttonSound;
+    private AudioSource _audio;
 
     // Start is called before the first frame update
     void Start()
     {
+        _audio = GetComponent<AudioSource>();
         OnSliderValueChanged_width();
         OnSliderValueChanged_height();
         OnSliderValueChanged_mines();
@@ -62,26 +62,22 @@ public class MainMenu : MonoBehaviour
         Grid._gridSize_x = 9;
         Grid._gridSize_y = 9;
         Grid._numOfMines = 10;
-        //levelToggle_easy.isOn = true;
-        //levelToggle_normal.isOn = false;
-        //levelToggle_hard.isOn = false;
     }
     public void OnClickLevelNormal()
     {
         Grid._gridSize_x = 16;
         Grid._gridSize_y = 16;
         Grid._numOfMines = 40;
-        //levelToggle_easy.isOn = false;
-        //levelToggle_normal.isOn = true;
-        //levelToggle_hard.isOn = false;
     }
     public void OnClickLevelHard()
     {
         Grid._gridSize_x = 30;
         Grid._gridSize_y = 16;
         Grid._numOfMines = 99;
-        //levelToggle_easy.isOn = false;
-        //levelToggle_normal.isOn = false;
-        //levelToggle_hard.isOn = true;
+    }
+
+    public void PlayButtonSound()
+    {
+        _audio.PlayOneShot(_buttonSound);
     }
 }

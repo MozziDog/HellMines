@@ -18,6 +18,7 @@ public class Grid : MonoBehaviour
     static List<TileBlock> _mines;
 
     public static int _leftTiles;
+    [SerializeField] int leftTiles;
     
 
     // Start is called before the first frame update
@@ -29,7 +30,7 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        leftTiles = _leftTiles;
     }
 
     public void Init()
@@ -64,8 +65,6 @@ public class Grid : MonoBehaviour
 
     void DeployMines()
     {
-        Debug.Assert(_gridSize_x * _gridSize_y > _numOfMines, "Mine Error");
-
         for(int i=0; i<_numOfMines; i++)
         {
             int rand = Random.Range(0, _gridSize_x * _gridSize_y);

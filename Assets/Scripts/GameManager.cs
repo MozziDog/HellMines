@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     {
         if (Grid._gridSize_x == 0 && Grid._gridSize_y == 0)
         {
+            Debug.LogError("Mine Error, Go back to Main Menu");
             var input = _player.GetComponent<StarterAssetsInputs>();
             input.cursorInputForLook = false;
             input.cursorLocked = false;

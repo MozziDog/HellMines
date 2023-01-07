@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using UnityEngine.UI;
 
-    [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(AudioSource))]
 
 public class PlayerAction : MonoBehaviour
 {
@@ -20,11 +21,16 @@ public class PlayerAction : MonoBehaviour
     public float _fireDelay;
     public float _actionDelay;
 
-    private StarterAssetsInputs _input;
+    [Space(10)]
+    [SerializeField] private AudioClip _gunSound;
+    [SerializeField] private AudioClip _shovelSound;
+    [SerializeField] private AudioClip _flagSound;
 
     [SerializeField] private float _lastFireTime = 0;
     [SerializeField] private float _lastActionTime = 0;
 
+    private StarterAssetsInputs _input;
+    private AudioSource _audio;
     private ParticleSystem _gun_flameParticle;
     private ParticleSystem _gun_smokeParticle;
     private ParticleSystem _shovel_flameParticle;
@@ -34,6 +40,7 @@ public class PlayerAction : MonoBehaviour
     {
         _input = GetComponent<StarterAssetsInputs>();
         _input.OnChangeWeapon += OnChangeWeapon;
+        _audio = GetComponent<AudioSource>();
         var _gun_particles = _gun.GetComponentsInChildren<ParticleSystem>();
         _gun_flameParticle = _gun_particles[0];
         _gun_smokeParticle = _gun_particles[1];
@@ -99,6 +106,7 @@ public class PlayerAction : MonoBehaviour
         _gun_smokeParticle.Stop();
         _gun_flameParticle.Play();
         _gun_smokeParticle.Play();
+        _audio.PlayOneShot(_gunSound);
 
         if (RaycastScreenCenter(out hit, LayerMask.GetMask("Enemy")))
         {
@@ -123,6 +131,12 @@ public class PlayerAction : MonoBehaviour
         // TODO: 공격 애니메이션 적용
         if (RaycastScreenCenter(out hit, LayerMask.GetMask("TileBlock")))
         {
+            if(_shovel_flameParticle != null)
+            {
+                _shovel_flameParticle.Stop();
+                _shovel_flameParticle.Play();
+            }
+            _audio.PlayOneShot(_shovelSound);
             if(hit.collider.CompareTag("Block"))
             {
                 var block = hit.collider.GetComponent<TileBlock>();
@@ -141,6 +155,7 @@ public class PlayerAction : MonoBehaviour
             {
                 var block = hit.collider.GetComponent<TileBlock>();
                 block.SetFlag();
+                _audio.PlayOneShot(_flagSound);
             }
         }
     }
