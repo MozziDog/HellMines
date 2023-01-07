@@ -17,9 +17,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _player;
     [SerializeField] WallControl _wallControl;
 
+    public bool isPlayMode = true;
+
     // Start is called before the first frame update
     void Start()
     {
+        isPlayMode = true;
         if (Grid._gridSize_x == 0 && Grid._gridSize_y == 0)
         {
             Debug.LogError("Mine Error, Go back to Main Menu");
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        isPlayMode = false;
         var input = _player.GetComponent<StarterAssetsInputs>();
         GameoverUI.SetActive(true);
         input.cursorInputForLook = false;
@@ -68,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
+        isPlayMode = false;
         var input = _player.GetComponent<StarterAssetsInputs>();
         GameClearUI.SetActive(true);
         input.cursorInputForLook = false;

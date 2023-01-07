@@ -26,26 +26,29 @@ public class PauseMenuUI : MonoBehaviour
 
     public void OnPause()
     {
-        if(!isPaused)
+        if (GameManager.instance.isPlayMode)
         {
-            isPaused = true;
-            Time.timeScale = 0f;
-            UI.SetActive(true);
-            AudioListener.volume = 0f;
-            input.look = Vector2.zero;
-            input.cursorInputForLook = false;
-            input.cursorLocked = false;
-            input.SetCursorState(false);
-        }
-        else
-        {
-            isPaused = false;
-            Time.timeScale = 1f;
-            UI.SetActive(false);
-            AudioListener.volume = 1f;
-            input.cursorInputForLook = true;
-            input.cursorLocked = true;
-            input.SetCursorState(true);
+            if (!isPaused)
+            {
+                isPaused = true;
+                Time.timeScale = 0f;
+                UI.SetActive(true);
+                AudioListener.volume = 0f;
+                input.look = Vector2.zero;
+                input.cursorInputForLook = false;
+                input.cursorLocked = false;
+                input.SetCursorState(false);
+            }
+            else
+            {
+                isPaused = false;
+                Time.timeScale = 1f;
+                UI.SetActive(false);
+                AudioListener.volume = 1f;
+                input.cursorInputForLook = true;
+                input.cursorLocked = true;
+                input.SetCursorState(true);
+            }
         }
     }
 }
